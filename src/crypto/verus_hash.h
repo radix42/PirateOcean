@@ -11,47 +11,11 @@ This provides the PoW hash function for Verus, enabling CPU mining.
 #include <cstring>
 #include <vector>
 
-//#include <cpuid.h>
 
-#define bit_AVX         0x10000000
-#define bit_AES         0x02000000
-
-#ifdef _WIN32
-#include <limits.h>
-#include <intrin.h>
-typedef unsigned __int32  uint32_t;
-
-#else
-#include <stdint.h>
-#endif
-
-class CPUID {
-  uint32_t regs[4];
-
-public:
-  explicit CPUID(unsigned i) {
-#ifdef _WIN32
-    __cpuid((int *)regs, (int)i);
-
-#else
-    asm volatile
-      ("cpuid" : "=a" (regs[0]), "=b" (regs[1]), "=c" (regs[2]), "=d" (regs[3])
-       : "a" (i), "c" (0));
-    // ECX is set to zero for CPUID function 4
-#endif
-  }
-
-  const uint32_t &EAX() const {return regs[0];}
-  const uint32_t &EBX() const {return regs[1];}
-  const uint32_t &ECX() const {return regs[2];}
-  const uint32_t &EDX() const {return regs[3];}
-};
-
-//extern "C" 
-//{
-#include "crypto/haraka.h"
+extern "C" 
+{
 #include "crypto/haraka_portable.h"
-//}
+}
 
 class CVerusHash
 {
@@ -120,7 +84,7 @@ class CVerusHashV2
             result = buf2;
             curPos = 0;
             std::fill(buf1, buf1 + sizeof(buf1), 0);
-            return *this;
+            return *this; 
         }
 
         int64_t *ExtraI64Ptr() { return (int64_t *)(curBuf + 32); }
@@ -156,16 +120,13 @@ extern void verus_hash_v2(void *result, const void *data, size_t len);
 
 inline bool IsCPUVerusOptimized()
 {
-    unsigned int eax,ebx,ecx,edx;
+  //    unsigned int eax,ebx,ecx,edx;
 
-//    if (!__get_cpuid(1,&eax,&ebx,&ecx,&edx))
-//    {
-//        return false;
-//    }
-    CPUID cpuID(1);
-    ecx = cpuID.ECX();
-
-    return ((ecx & (bit_AVX | bit_AES)) == (bit_AVX | bit_AES));
+  //    if (!__get_cpuid(1,&eax,&ebx,&ecx,&edx))
+  //    {
+        return false;
+	//    }
+	//    return ((ecx & (bit_AVX | bit_AES)) == (bit_AVX | bit_AES));
 };
 
 #endif

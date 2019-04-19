@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_EQUIHASH_H
-#define KOMODO_EQUIHASH_H
+#ifndef BITCOIN_EQUIHASH_H
+#define BITCOIN_EQUIHASH_H
 
 #include "crypto/sha256.h"
 #include "utilstrencodings.h"
@@ -93,10 +93,8 @@ public:
     ~FullStepRow() { }
 
     FullStepRow(const FullStepRow<WIDTH>& a) : StepRow<WIDTH> {a} { }
-
     template<size_t W>
     FullStepRow(const FullStepRow<W>& a, const FullStepRow<W>& b, size_t len, size_t lenIndices, int trim);
-
     FullStepRow& operator=(const FullStepRow<WIDTH>& a);
 
     inline bool IndicesBefore(const FullStepRow<WIDTH>& a, size_t len, size_t lenIndices) const { return memcmp(hash+len, a.hash+len, lenIndices) < 0; }
@@ -278,4 +276,4 @@ inline bool EhOptimisedSolveUncancellable(unsigned int n, unsigned int k, const 
         throw std::invalid_argument("Unsupported Equihash parameters"); \
     }
 
-#endif // KOMODO_EQUIHASH_H
+#endif // BITCOIN_EQUIHASH_H

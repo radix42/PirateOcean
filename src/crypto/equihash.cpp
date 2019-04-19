@@ -13,7 +13,7 @@
 // https://www.internetsociety.org/sites/default/files/blogs-media/equihash-asymmetric-proof-of-work-based-generalized-birthday-problem.pdf
 
 #if defined(HAVE_CONFIG_H)
-#include "config/komodo-config.h"
+#include "config/bitcoin-config.h"
 #endif
 
 #include "compat/endian.h"
@@ -22,11 +22,13 @@
 #ifndef __linux__
 #include "compat/endian.h"
 #endif
+
 #include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
 #include <boost/optional.hpp>
+
 /*
 #ifdef __APPLE__
 #include <machine/endian.h>
@@ -50,10 +52,6 @@
 #define __BIG_ENDIAN    BIG_ENDIAN
 #define __LITTLE_ENDIAN LITTLE_ENDIAN
 #define __BYTE_ORDER    BYTE_ORDER
-#endif
-
-#ifdef WIN32
-#include "compat/endian.h"
 #endif
 */
 static EhSolverCancelledException solver_cancelled;
@@ -89,8 +87,6 @@ void ExpandArray(const unsigned char* in, size_t in_len,
                  unsigned char* out, size_t out_len,
                  size_t bit_len, size_t byte_pad)
 {
-    (void)out_len;
-
     assert(bit_len >= 8);
     assert(8*sizeof(uint32_t) >= 7+bit_len);
 
@@ -134,7 +130,6 @@ void CompressArray(const unsigned char* in, size_t in_len,
                    unsigned char* out, size_t out_len,
                    size_t bit_len, size_t byte_pad)
 {
-    (void)in_len;
     assert(bit_len >= 8);
     assert(8*sizeof(uint32_t) >= 7+bit_len);
 

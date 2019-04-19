@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef KOMODO_CRYPTO_COMMON_H
-#define KOMODO_CRYPTO_COMMON_H
+#ifndef BITCOIN_CRYPTO_COMMON_H
+#define BITCOIN_CRYPTO_COMMON_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/komodo-config.h"
+#include "bitcoin-config.h"
 #endif
 
 #include <stdint.h>
@@ -17,7 +17,7 @@
 #include "compat/endian.h"
 
 #if defined(NDEBUG)
-# error "Komodo cannot be compiled without assertions."
+# error "Zcash cannot be compiled without assertions."
 #endif
 
 uint16_t static inline ReadLE16(const unsigned char* ptr)
@@ -123,4 +123,4 @@ int inline init_and_check_sodium()
     return 0;
 }
 
-#endif // KOMODO_CRYPTO_COMMON_H
+#endif // BITCOIN_CRYPTO_COMMON_H
